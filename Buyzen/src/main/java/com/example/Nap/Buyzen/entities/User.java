@@ -1,5 +1,6 @@
 package com.example.Nap.Buyzen.entities;
 
+import com.example.Nap.Buyzen.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +33,10 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
      private String password;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public User(String pass) {
     }
