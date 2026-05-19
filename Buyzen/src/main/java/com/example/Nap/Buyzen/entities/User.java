@@ -41,6 +41,9 @@ public class User implements UserDetails {
     public User(String pass) {
     }
 
+    public User(String name, String email, String encodedPass, String role) {
+    }
+
     @Override
     public String toString() {
         return "User{" +
