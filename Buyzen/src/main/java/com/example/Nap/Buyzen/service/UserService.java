@@ -2,6 +2,7 @@ package com.example.Nap.Buyzen.service;
 
 import com.example.Nap.Buyzen.dto.*;
 import com.example.Nap.Buyzen.entities.User;
+import com.example.Nap.Buyzen.enums.Role;
 import com.example.Nap.Buyzen.repository.UserRepo;
 import com.example.Nap.Buyzen.security.AuthUtil;
 import com.example.Nap.Buyzen.security.SecurityPrinciple;
@@ -37,7 +38,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void signup(SignupDto signupDto){
+    public void signup(SignupDto signupDto, Role role){
         if (signupDto==null){
             return;
         }
@@ -45,7 +46,7 @@ public class UserService {
             throw new RuntimeException("Email already exist");
         }
         String hashedPassword=passwordEncoder.encode(signupDto.getPassword());
-        User user=new User(signupDto.getName(),signupDto.getEmail(),hashedPassword);
+        User user=new User(signupDto.getName(),signupDto.getEmail(),hashedPassword,role);
         userRepo.save(user);
 
     }

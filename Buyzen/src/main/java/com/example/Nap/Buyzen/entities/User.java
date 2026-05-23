@@ -19,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "users")
 public class User implements UserDetails {
 
      @Id
@@ -41,7 +42,9 @@ public class User implements UserDetails {
     public User(String pass) {
     }
 
-    public User(String name, String email, String encodedPass, String role) {
+
+
+    public User(String name, String email, String hashedPassword, Role role) {
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.Nap.Buyzen.controller;
 
 import com.example.Nap.Buyzen.dto.*;
+import com.example.Nap.Buyzen.enums.Role;
 import com.example.Nap.Buyzen.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,8 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<String>signup(@RequestBody SignupDto signupDto){
-        userService.signup(signupDto);
+
+        userService.signup(signupDto,Role.USER);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("user created");
     }
