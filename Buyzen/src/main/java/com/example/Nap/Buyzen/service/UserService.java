@@ -14,6 +14,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -68,6 +70,11 @@ public class UserService {
         int id=getCurrentUserId();
         User user=userRepo.findById(id).orElseThrow(()->new RuntimeException("user not found"));
         return new UserDto(user.getName(),user.getEmail());
+    }
+
+    public List<UserDto> getAllUsers(){
+       return userRepo.findAll().stream().map(user->(new UserDto(
+                user.getId(),user.getName(), user.getEmail()))).toList();
     }
 
 

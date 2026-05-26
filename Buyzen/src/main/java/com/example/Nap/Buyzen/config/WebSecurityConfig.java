@@ -36,6 +36,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/signup", "/login", "/products/**").permitAll()
                         .requestMatchers("/user/**","/cart/**","/order/**").authenticated()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                 )
 
                 // 🔥 THIS IS THE FIX

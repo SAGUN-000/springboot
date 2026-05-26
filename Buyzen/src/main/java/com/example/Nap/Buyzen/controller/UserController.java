@@ -37,6 +37,8 @@ public class UserController {
         return ResponseEntity.ok(userService.login(loginRequestDto));
     }
 
+
+
     @GetMapping("/user/profile")
     public ResponseEntity<UserDto> getUserDetails(){
         UserDto userDto=userService.getUserDetails();

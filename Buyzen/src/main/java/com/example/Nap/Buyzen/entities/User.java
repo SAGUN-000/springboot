@@ -45,6 +45,10 @@ public class User implements UserDetails {
 
 
     public User(String name, String email, String hashedPassword, Role role) {
+        this.name=name;
+        this.email=email;
+        this.password=hashedPassword;
+        this.role=role;
     }
 
     @Override
@@ -62,17 +66,10 @@ public class User implements UserDetails {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    public User(String name, String email, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
 
 
-    public User(String name, String email) {
-        this.name=name;
-        this.email=email;
-    }
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

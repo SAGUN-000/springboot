@@ -73,11 +73,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 return;
             }
 
-            SecurityPrinciple principle=new SecurityPrinciple(
+            SecurityPrinciple principle = new SecurityPrinciple(
                     user.getId(),
                     user.getEmail(),
                     user.getPassword(),
-                    List.of(new SimpleGrantedAuthority("ROLE_USER"))
+                    List.of(
+                            new SimpleGrantedAuthority(
+                                    "ROLE_" + user.getRole().name()
+                            )
+                    )
             );
 
 
