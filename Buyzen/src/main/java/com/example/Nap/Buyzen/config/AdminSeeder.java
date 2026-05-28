@@ -22,6 +22,7 @@ public class AdminSeeder {
            Optional<User>existingAdmin=userRepo.findByEmail(adminEmail);
            if(existingAdmin.isEmpty()){
                User admin = new User();
+               admin.setName("Admin");
                admin.setEmail(adminEmail);
                admin.setPassword(passwordEncoder.encode("admin128270"));
                admin.setRole(Role.ADMIN);
