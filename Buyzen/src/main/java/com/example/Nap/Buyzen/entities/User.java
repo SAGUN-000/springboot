@@ -39,6 +39,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
+    private Cart cart;
+
     public User(String pass) {
     }
 
