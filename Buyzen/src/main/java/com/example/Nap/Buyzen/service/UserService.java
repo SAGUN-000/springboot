@@ -87,7 +87,10 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(dto.getNewPass()));
         userRepo.save(user);
+    }
 
-
+    public void deleteUser(int id){
+        User user=userRepo.findById(id).orElseThrow(()->new RuntimeException("user not found"));
+        userRepo.delete(user);
     }
 }
