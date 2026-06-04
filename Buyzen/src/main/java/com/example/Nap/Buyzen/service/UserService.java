@@ -93,4 +93,6 @@ public class UserService {
         User user=userRepo.findById(id).orElseThrow(()->new RuntimeException("user not found"));
         userRepo.delete(user);
     }
+
+
 }

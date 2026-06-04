@@ -42,6 +42,7 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
     private Cart cart;
 
+
     public User(String pass) {
     }
 

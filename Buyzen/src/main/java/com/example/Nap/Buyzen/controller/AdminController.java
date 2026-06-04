@@ -2,7 +2,9 @@ package com.example.Nap.Buyzen.controller;
 
 import com.example.Nap.Buyzen.dto.SignupDto;
 import com.example.Nap.Buyzen.dto.UserDto;
+import com.example.Nap.Buyzen.dto.UserPurchaseDto;
 import com.example.Nap.Buyzen.enums.Role;
+import com.example.Nap.Buyzen.service.AdminAnalyticsService;
 import com.example.Nap.Buyzen.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import java.util.List;
 public class AdminController {
 
     private final UserService userService;
+    private final AdminAnalyticsService adminAnalyticsService;
 
     @PostMapping("/create_admin")
     public ResponseEntity<String> CreateAdmin(@RequestBody SignupDto signupDto){
@@ -37,6 +40,11 @@ public class AdminController {
         userService.deleteUser(id);
         return ResponseEntity.ok("User deleted");
 
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserPurchaseDto>> getAllUserPurchases(){
+        return ResponseEntity.ok(adminAnalyticsService.getUserPurchaseStats());
     }
 
 

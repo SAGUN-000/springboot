@@ -2,7 +2,6 @@ package com.example.Nap.Buyzen.service;
 
 import com.example.Nap.Buyzen.dto.UserPurchaseDto;
 import com.example.Nap.Buyzen.repository.OrderItemRepo;
-import com.example.Nap.Buyzen.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
