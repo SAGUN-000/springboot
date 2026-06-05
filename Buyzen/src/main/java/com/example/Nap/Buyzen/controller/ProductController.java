@@ -2,6 +2,7 @@ package com.example.Nap.Buyzen.controller;
 
 import com.example.Nap.Buyzen.dto.ProductDto;
 import com.example.Nap.Buyzen.service.ProductService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,35 +21,31 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductDto>> getProducts(@RequestParam(required = false) String keyword) {
-        List<ProductDto> productList;
+    public ResponseEntity<Page<ProductDto>> getProducts(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(defaultValue = "1") int pageNum,
+            @RequestParam(defaultValue = "20") int pageSize
+    ) {
 
-        if (keyword == null || keyword.isBlank()) {
-            productList = productService.getAllProducts();
-        } else {
-            productList = productService.searchProducts(keyword);
-        }
+        Page<ProductDto> result = productService.getProducts(keyword, pageNum, pageSize);
 
-        if (productList == null || productList.isEmpty()) {
+        if (result.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.ok(productList);
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/category/{slug}")
-    public ResponseEntity<List<ProductDto>>getProductsByCategorySlug(@PathVariable String slug,
-                                                                     @RequestParam(required = false) String keyword){
-        List<ProductDto>products;
+    public ResponseEntity<Page<ProductDto>> getProductsByCategorySlug(
+            @PathVariable String slug,
+            @RequestParam(defaultValue = "1") int pageNum,
+            @RequestParam(defaultValue = "20") int pageSize
+    ) {
 
-        if (keyword == null || keyword.isBlank()) {
-            products = productService.getProductsByCategory(slug);
-        } else {
-            products = productService.searchProducts(keyword);
-        }
-        if (products == null || products.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
+        Page<ProductDto> products =
+                productService.getProductsByCategory(slug, pageNum, pageSize);
+
         return ResponseEntity.ok(products);
     }
     @GetMapping("/{id}")

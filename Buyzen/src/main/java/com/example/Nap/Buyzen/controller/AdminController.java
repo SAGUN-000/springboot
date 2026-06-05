@@ -42,7 +42,7 @@ public class AdminController {
 
     }
 
-    @GetMapping
+    @GetMapping("/user_purchase")
     public ResponseEntity<List<UserPurchaseDto>> getAllUserPurchases(){
         return ResponseEntity.ok(adminAnalyticsService.getUserPurchaseStats());
     }

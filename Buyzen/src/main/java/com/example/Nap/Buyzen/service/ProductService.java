@@ -3,6 +3,9 @@ package com.example.Nap.Buyzen.service;
 import com.example.Nap.Buyzen.dto.ProductDto;
 import com.example.Nap.Buyzen.entities.Product;
 import com.example.Nap.Buyzen.repository.ProductRepo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,25 +19,45 @@ public class ProductService {
         this.productRepo = productRepo;
     }
 
-    public List<ProductDto> getAllProducts(){
-        List<Product>productList=productRepo.findFeaturedProducts();
-        if (productList.isEmpty()){
-            return null;
+    public Page<ProductDto> getProducts(String keyword, int pageNum, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+
+        Page<Product> productPage;
+
+        if (keyword == null || keyword.isBlank()) {
+            productPage = productRepo.findAll(pageable);
+        } else {
+            productPage = productRepo.findByNameContainingIgnoreCase(keyword,pageable);
         }
-        return productList.stream().map(p->(new ProductDto(p.getId(),p.getName(),p.getPrice()
-        ,p.getUrl(),p.isFeatured()))).toList();
+
+        return productPage.map(p ->
+                new ProductDto(
+                        p.getId(),
+                        p.getName(),
+                        p.getPrice(),
+                        p.getUrl(),
+                        p.isFeatured()
+                )
+        );
     }
 
-    public List<ProductDto> searchProducts(String keyword){
-        List<Product> productList=productRepo.findByNameContainingIgnoreCase(keyword);
-        return productList.stream().map((p)->new ProductDto(p.getId(),p.getName()
-        ,p.getPrice(),p.getUrl(),p.getCategory().getId())).toList();
-    }
 
-    public List<ProductDto>getProductsByCategory(String slug){
-        List<Product>productList=productRepo.findByCategory_Slug(slug);
-        return productList.stream().map((p)->new ProductDto(p.getId(),p.getName(),p.getPrice(),
-                p.getUrl(),p.getCategory().getId())).toList();
+    public Page<ProductDto> getProductsByCategory(String slug, int pageNum, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+
+        Page<Product> productPage = productRepo.findByCategory_Slug(slug, pageable);
+
+        return productPage.map(p ->
+                new ProductDto(
+                        p.getId(),
+                        p.getName(),
+                        p.getPrice(),
+                        p.getUrl(),
+                        p.getCategory().getId()
+                )
+        );
     }
 
     public ProductDto getProductById(int id){
