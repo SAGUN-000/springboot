@@ -10,7 +10,8 @@ import java.util.List;
 public interface OrderItemRepo extends JpaRepository<OrderItem,Integer> {
 
     @Query("""
-        SELECT new com.example.dto.UserPurchaseStatsDto(
+
+            SELECT new com.example.Nap.Buyzen.dto.UserPurchaseDto(
             u.name,
             u.email,
             SUM(oi.quantity)

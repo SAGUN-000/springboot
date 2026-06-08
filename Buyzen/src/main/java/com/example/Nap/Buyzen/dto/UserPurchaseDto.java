@@ -12,5 +12,5 @@ import lombok.Setter;
 public class UserPurchaseDto {
     private String name;
     private String email;
-    private int quantity;
+    private Long quantity;
 }

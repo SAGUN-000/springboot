@@ -26,7 +26,7 @@ public class ProductService {
         Page<Product> productPage;
 
         if (keyword == null || keyword.isBlank()) {
-            productPage = productRepo.findAll(pageable);
+            productPage = productRepo.findFeaturedProducts(pageable);
         } else {
             productPage = productRepo.findByNameContainingIgnoreCase(keyword,pageable);
         }
