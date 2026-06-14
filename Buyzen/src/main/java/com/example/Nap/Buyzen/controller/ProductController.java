@@ -27,6 +27,8 @@ public class ProductController {
             @RequestParam(defaultValue = "20") int pageSize
     ) {
 
+        System.out.println("KEYWORD = [" + keyword + "]");
+
         Page<ProductDto> result = productService.getProducts(keyword, pageNum, pageSize);
 
         if (result.isEmpty()) {
