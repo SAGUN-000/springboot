@@ -1,6 +1,7 @@
 package com.example.Nap.Buyzen.config;
 
 import com.example.Nap.Buyzen.entities.User;
+import com.example.Nap.Buyzen.enums.AuthProviderType;
 import com.example.Nap.Buyzen.enums.Role;
 import com.example.Nap.Buyzen.repository.UserRepo;
 
@@ -26,6 +27,7 @@ public class AdminSeeder {
                admin.setEmail(adminEmail);
                admin.setPassword(passwordEncoder.encode("admin128270"));
                admin.setRole(Role.ADMIN);
+               admin.setProviderType(AuthProviderType.LOCAL);
                userRepo.save(admin);
                System.out.printf("Admin has been saved with email: %s%n",admin.getEmail());
            }

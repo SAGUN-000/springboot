@@ -15,7 +15,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@CrossOrigin("http://localhost:5174")
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/order")
 @RequiredArgsConstructor
 

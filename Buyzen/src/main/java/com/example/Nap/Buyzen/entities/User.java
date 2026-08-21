@@ -1,5 +1,6 @@
 package com.example.Nap.Buyzen.entities;
 
+import com.example.Nap.Buyzen.enums.AuthProviderType;
 import com.example.Nap.Buyzen.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,12 +33,17 @@ public class User implements UserDetails {
     @Column(nullable = false,unique = true)
      private String email;
 
-    @Column(nullable = false)
+
      private String password;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Enumerated(EnumType.STRING)
+    private AuthProviderType  providerType;
+
+    private String providerId;
 
     @OneToOne(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
     private Cart cart;

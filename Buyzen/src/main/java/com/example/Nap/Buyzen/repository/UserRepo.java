@@ -1,6 +1,7 @@
 package com.example.Nap.Buyzen.repository;
 
 import com.example.Nap.Buyzen.entities.User;
+import com.example.Nap.Buyzen.enums.AuthProviderType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,5 +13,5 @@ public interface UserRepo extends JpaRepository<User,Integer> {
     Optional<User> findByEmail(String email);
 
 
-
+    Optional<User> findByProviderTypeAndProviderId(AuthProviderType providerType, String providerId);
 }

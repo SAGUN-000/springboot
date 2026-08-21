@@ -1,6 +1,7 @@
 package com.example.Nap.Buyzen.config;
 
 import com.example.Nap.Buyzen.security.JwtAuthFilter;
+import com.example.Nap.Buyzen.security.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +25,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class WebSecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -50,6 +52,12 @@ public class WebSecurityConfig {
                 )
 
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .oauth2Login(oauth -> oauth
+                        .failureHandler((request, response, exception) -> {
+                            log.error("OAuth2 failure", exception);
+                        })
+                        .successHandler(oAuth2SuccessHandler)
+                )
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable);
 

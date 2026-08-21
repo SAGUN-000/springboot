@@ -1,6 +1,7 @@
 package com.example.Nap.Buyzen.security;
 
 import com.example.Nap.Buyzen.entities.User;
+import com.example.Nap.Buyzen.enums.AuthProviderType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -50,4 +51,12 @@ public class AuthUtil {
         return extractClaims(token).get("userId", Integer.class);
     }
 
+    public AuthProviderType getProviderTypeFromRegistrationId(String registrationId) {
+        return switch (registrationId.toLowerCase()) {
+            case "google" -> AuthProviderType.GOOGLE;
+            case "github" -> AuthProviderType.GITHUB;
+            case "facebook" -> AuthProviderType.FACEBOOK;
+            default -> throw new IllegalArgumentException("Unsupported OAuth2 provider: " + registrationId);
+        };
+    }
 }

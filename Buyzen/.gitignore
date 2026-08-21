@@ -1,4 +1,9 @@
-HELP.md
+# Spring Boot
+/src/main/resources/application.properties
+/src/main/resources/application.yml
+
+# Spring Initializr
+/HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

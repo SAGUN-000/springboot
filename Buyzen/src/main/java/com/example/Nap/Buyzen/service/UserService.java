@@ -2,6 +2,7 @@ package com.example.Nap.Buyzen.service;
 
 import com.example.Nap.Buyzen.dto.*;
 import com.example.Nap.Buyzen.entities.User;
+import com.example.Nap.Buyzen.enums.AuthProviderType;
 import com.example.Nap.Buyzen.enums.Role;
 import com.example.Nap.Buyzen.repository.UserRepo;
 import com.example.Nap.Buyzen.security.AuthUtil;
@@ -49,17 +50,27 @@ public class UserService {
         }
         String hashedPassword=passwordEncoder.encode(signupDto.getPassword());
         User user=new User(signupDto.getName(),signupDto.getEmail(),hashedPassword,role);
+        user.setProviderType(AuthProviderType.LOCAL);
         userRepo.save(user);
 
     }
 
     public LoginResponseDto login(LoginRequestDto loginRequestDto){
 
+        User user = userRepo.findByEmail(loginRequestDto.getEmail())
+                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+
+        if (user.getProviderType() != AuthProviderType.LOCAL) {
+            throw new RuntimeException("This account uses " + user.getProviderType()
+                    + " authentication");
+        }
+
+
         Authentication authentication=authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(),loginRequestDto.getPassword())
         );
 
-        User user=(User) authentication.getPrincipal();
+         user=(User) authentication.getPrincipal();
         String token=authUtil.generateAccessToken(user);
 
         return new LoginResponseDto(token,user.getId());
@@ -81,6 +92,11 @@ public class UserService {
     public void updatePass(PassUpdateDto dto){
         int userid=getCurrentUserId();
         User user=userRepo.findById(userid).orElseThrow(()->new RuntimeException("user not found"));
+
+        if (user.getProviderType() != AuthProviderType.LOCAL) {
+            throw new RuntimeException("Password authentication is not enabled for this account");
+        }
+
         if(!passwordEncoder.matches(dto.getOldPass(), user.getPassword())){
             throw new RuntimeException("Old password is incorrect");
         }

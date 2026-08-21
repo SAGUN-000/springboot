@@ -124,9 +124,7 @@ public class OrderService {
     }
 
     private OrderDto mapToDto(Order order) {
-
         OrderDto dto = new OrderDto();
-
         dto.setId(order.getId());
         dto.setStatus(order.getStatus());
         dto.setTotalPrice(order.getTotal());
@@ -136,7 +134,12 @@ public class OrderService {
                 .map(item -> {
                     OrderItemDto itemDto = new OrderItemDto();
                     itemDto.setProductId(item.getProduct().getId());
-                    itemDto.setProduct_name(item.getProductName());
+                    itemDto.setProduct_name(
+                            item.getProductName() != null
+                                    ? item.getProductName()
+                                    : item.getProduct().getName()
+                    );
+                    itemDto.setUrl(item.getProduct().getUrl());
                     itemDto.setQuantity(item.getQuantity());
                     itemDto.setPrice(item.getPrice());
                     return itemDto;
@@ -144,10 +147,10 @@ public class OrderService {
                 .toList();
 
         dto.setItems(itemDtos);
-
         return dto;
     }
 
+    @Transactional
     public List<OrderDto> viewOrders() {
         int userId = getCurrentUserId();
 
