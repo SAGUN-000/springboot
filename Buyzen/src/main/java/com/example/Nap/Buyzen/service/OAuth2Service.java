@@ -22,6 +22,7 @@ public class OAuth2Service {
     private final UserRepo userRepo;
     private final AuthUtil authUtil;
     private final List<OAuth2Provider> providers;
+    private final MailService mailService;
 
     public LoginResponseDto handleOauth2LoginRequest(
             OAuth2User oAuth2User,
@@ -109,6 +110,7 @@ public class OAuth2Service {
         // 8. The user now exists in our database.
         //    Generate our application's JWT and return the login response.
         String token = authUtil.generateAccessToken(user);
+        mailService.sendMail(user.getEmail());
 
         return new LoginResponseDto(token);
     }
