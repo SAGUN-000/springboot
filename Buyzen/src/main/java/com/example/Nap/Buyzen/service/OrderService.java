@@ -1,5 +1,6 @@
 package com.example.Nap.Buyzen.service;
 
+import com.example.Nap.Buyzen.dto.CheckoutRequestDto;
 import com.example.Nap.Buyzen.dto.OrderDto;
 import com.example.Nap.Buyzen.dto.OrderItemDto;
 import com.example.Nap.Buyzen.entities.Order;
@@ -40,7 +41,9 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderDto placeOrder(List<OrderItemDto> orderItemDtoList) {
+    public OrderDto placeOrder(CheckoutRequestDto checkoutRequestDto) {
+
+        List<OrderItemDto> orderItemDtoList = checkoutRequestDto.getOrderItems();
 
         int userId = getCurrentUserId();
 
@@ -83,6 +86,12 @@ public class OrderService {
         Order order = new Order();
         order.setUser(user);
         order.setStatus(OrderStatus.PENDING);
+        order.setAddress(checkoutRequestDto.getAddress());
+        order.setCity(checkoutRequestDto.getCity());
+        order.setProvince(checkoutRequestDto.getProvince());
+        order.setPostalCode(checkoutRequestDto.getPostalCode());
+        order.setCountry(checkoutRequestDto.getCountry());
+
 
         // IMPORTANT: we calculate total here
         BigDecimal total = BigDecimal.ZERO;

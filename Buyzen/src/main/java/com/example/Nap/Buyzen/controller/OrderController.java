@@ -1,5 +1,6 @@
 package com.example.Nap.Buyzen.controller;
 
+import com.example.Nap.Buyzen.dto.CheckoutRequestDto;
 import com.example.Nap.Buyzen.dto.OrderDto;
 import com.example.Nap.Buyzen.dto.OrderItemDto;
 import com.example.Nap.Buyzen.service.OrderService;
@@ -24,11 +25,11 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/checkout")
-    public ResponseEntity<OrderDto>getOrder(@RequestBody List<OrderItemDto> orderItemDto){
+    public ResponseEntity<OrderDto>getOrder(@RequestBody CheckoutRequestDto checkoutRequestDto){
 
-        log.info("Dto received: {}", orderItemDto);
+        log.info("Dto received: {}", checkoutRequestDto);
 
-       return ResponseEntity.ok(orderService.placeOrder(orderItemDto));
+       return ResponseEntity.ok(orderService.placeOrder(checkoutRequestDto));
 
     }
 

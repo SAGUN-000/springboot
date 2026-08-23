@@ -34,6 +34,30 @@ public class Order {
     private BigDecimal total;
 
     @Column(nullable = false)
+    private String address;
+
+    @Column(nullable = false)
+    private String city;
+
+    @Column(nullable = false)
+    private String province;
+
+    @Column(nullable = false)
+    private String postalCode;
+
+    @Column(nullable = false)
+    private String country;
+
+    @Column(nullable = false)
+    private Double latitude;
+
+    @Column(nullable = false)
+    private Double longitude;
+
+
+
+
+    @Column(nullable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
