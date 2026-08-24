@@ -21,6 +21,10 @@ public class OrderDto {
     private OrderStatus status;
     private List<OrderItemDto> items = new ArrayList<>();
     private BigDecimal totalPrice;
+    private String address;
+    private String city;
+    private String country;
+
 
     public <T> OrderDto(List<T> ts) {
     }

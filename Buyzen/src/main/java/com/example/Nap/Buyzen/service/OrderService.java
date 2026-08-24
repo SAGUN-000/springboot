@@ -91,6 +91,8 @@ public class OrderService {
         order.setProvince(checkoutRequestDto.getProvince());
         order.setPostalCode(checkoutRequestDto.getPostalCode());
         order.setCountry(checkoutRequestDto.getCountry());
+        order.setLatitude(checkoutRequestDto.getLatitude());
+        order.setLongitude(checkoutRequestDto.getLongitude());
 
 
         // IMPORTANT: we calculate total here
