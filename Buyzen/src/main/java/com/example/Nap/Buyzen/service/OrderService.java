@@ -139,6 +139,9 @@ public class OrderService {
         dto.setId(order.getId());
         dto.setStatus(order.getStatus());
         dto.setTotalPrice(order.getTotal());
+        dto.setAddress(order.getAddress());
+        dto.setCity(order.getCity());
+        dto.setCountry(order.getCountry());
 
         List<OrderItemDto> itemDtos = order.getOrderItems()
                 .stream()
