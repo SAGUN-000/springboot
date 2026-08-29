@@ -1,5 +1,6 @@
 package com.example.Nap.Buyzen.controller;
 
+import com.example.Nap.Buyzen.dto.AdminOrderDto;
 import com.example.Nap.Buyzen.dto.SignupDto;
 import com.example.Nap.Buyzen.dto.UserDto;
 import com.example.Nap.Buyzen.dto.UserPurchaseDto;
@@ -47,7 +48,10 @@ public class AdminController {
         return ResponseEntity.ok(adminAnalyticsService.getUserPurchaseStats());
     }
 
-
+     @GetMapping("/orderDetails")
+    public ResponseEntity<List<AdminOrderDto>> getAllOrders(){
+        return ResponseEntity.ok(adminAnalyticsService.getAllOrdersForAdmin());
+     }
 
 
 

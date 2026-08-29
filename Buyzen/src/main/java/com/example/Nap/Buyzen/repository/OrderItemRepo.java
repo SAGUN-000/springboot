@@ -22,4 +22,14 @@ public interface OrderItemRepo extends JpaRepository<OrderItem,Integer> {
         GROUP BY u.name, u.email
         """)
     List<UserPurchaseDto>getUserPurchaseStats();
+
+    @Query("""
+    SELECT oi
+    FROM OrderItem oi
+    JOIN FETCH oi.order o
+    JOIN FETCH o.user u
+    JOIN FETCH oi.product p
+    ORDER BY o.id DESC
+    """)
+    List<OrderItem> getAllOrderItemsForAdmin();
 }
