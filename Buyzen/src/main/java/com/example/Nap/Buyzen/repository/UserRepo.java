@@ -2,8 +2,10 @@ package com.example.Nap.Buyzen.repository;
 
 import com.example.Nap.Buyzen.entities.User;
 import com.example.Nap.Buyzen.enums.AuthProviderType;
+import com.example.Nap.Buyzen.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -14,4 +16,6 @@ public interface UserRepo extends JpaRepository<User,Integer> {
 
 
     Optional<User> findByProviderTypeAndProviderId(AuthProviderType providerType, String providerId);
+
+    Optional<User>  findByRole(Role role);
 }

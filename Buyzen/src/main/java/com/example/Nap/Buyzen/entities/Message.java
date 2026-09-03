@@ -20,7 +20,7 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
    private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_id", nullable = false)
     private Chat chat;
 
