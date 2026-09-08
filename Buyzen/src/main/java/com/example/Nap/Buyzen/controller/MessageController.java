@@ -1,6 +1,7 @@
 package com.example.Nap.Buyzen.controller;
 
-import com.example.Nap.Buyzen.dto.MessageDto;
+import com.example.Nap.Buyzen.dto.MessageResponseDto;
+import com.example.Nap.Buyzen.dto.SendmessageDto;
 import com.example.Nap.Buyzen.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,18 +22,20 @@ public class MessageController {
     private final MessageService messageService;
     private final SimpMessagingTemplate messagingTemplate;
 
-    public ResponseEntity<Integer> createMessage(){
-       return ResponseEntity.ok(messageService.createChat());
+
+    @GetMapping("/{receiverId}")
+    public ResponseEntity<Integer>getChatId(@PathVariable int receiverId){
+      return   ResponseEntity.ok(messageService.getChatIdByReceiverId(receiverId));
     }
 
-    @GetMapping("/chat/{chatId}")
-    public ResponseEntity<List<MessageDto>> getMessages(@PathVariable("chatId") int chatId){
+    @GetMapping("/{chatId}")
+    public ResponseEntity<List<SendmessageDto>> getMessages(@PathVariable("chatId") int chatId){
         return ResponseEntity.ok(messageService.getMessages(chatId));
     }
 
     @MessageMapping("/message")
-    public void sendMessage(MessageDto messageDto){
-       MessageDto saveMessage=messageService.saveMessage(messageDto);
+    public void sendMessage(SendmessageDto messageDto){
+       MessageResponseDto saveMessage=messageService.sendMessage(messageDto);
        messagingTemplate.convertAndSend("/topic/messages",saveMessage);
     }
 

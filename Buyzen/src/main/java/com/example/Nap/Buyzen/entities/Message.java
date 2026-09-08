@@ -25,6 +25,9 @@ public class Message {
     private Chat chat;
 
     @Column(nullable = false)
+    private int senderId;
+
+    @Column(nullable = false)
     private String content;
 
     @CreationTimestamp

@@ -1,6 +1,7 @@
 package com.example.Nap.Buyzen.dto;
 
-public record MessageDto(
+public record MessageResponseDto(
         int chatId,
+        int senderId,
         String content
 ) {}

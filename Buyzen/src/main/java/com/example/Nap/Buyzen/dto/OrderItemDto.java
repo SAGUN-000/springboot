@@ -21,6 +21,8 @@ public class OrderItemDto {
     private BigDecimal price;
     private int quantity;
     private String url;
+    private int sellerId;
+
 
 
     public OrderItemDto(int productId) {

@@ -8,6 +8,7 @@ import com.example.Nap.Buyzen.entities.OrderItem;
 import com.example.Nap.Buyzen.entities.Product;
 import com.example.Nap.Buyzen.entities.User;
 import com.example.Nap.Buyzen.enums.OrderStatus;
+import com.example.Nap.Buyzen.enums.Role;
 import com.example.Nap.Buyzen.repository.OrderItemRepo;
 import com.example.Nap.Buyzen.repository.OrderRepo;
 import com.example.Nap.Buyzen.repository.ProductRepo;
@@ -82,6 +83,7 @@ public class OrderService {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+
         // 4. Create order
         Order order = new Order();
         order.setUser(user);
@@ -143,6 +145,10 @@ public class OrderService {
         dto.setCity(order.getCity());
         dto.setCountry(order.getCountry());
 
+        User seller=userRepo.findByRole(Role.ADMIN)
+                .orElseThrow(() -> new RuntimeException("seller not found"));
+
+
         List<OrderItemDto> itemDtos = order.getOrderItems()
                 .stream()
                 .map(item -> {
@@ -156,6 +162,7 @@ public class OrderService {
                     itemDto.setUrl(item.getProduct().getUrl());
                     itemDto.setQuantity(item.getQuantity());
                     itemDto.setPrice(item.getPrice());
+                    itemDto.setSellerId(seller.getId());
                     return itemDto;
                 })
                 .toList();
