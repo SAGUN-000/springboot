@@ -13,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -34,13 +34,18 @@ public class MessageService {
     }
 
 
-    public List<SendmessageDto> getMessages(int chatId) {
+    public List<MessageResponseDto> getMessages(int chatId) {
 
         //check whether chat exists or not
 
-        chatRepo.findById(chatId).orElseThrow(() -> new RuntimeException("chat not found"));
-
-        return messageRepo.findAllByChatId(chatId);
+        return messageRepo.findAllByChatId(chatId)
+                .stream()
+                .map(message -> new MessageResponseDto(
+                        message.getChat().getId(),
+                        message.getSenderId(),
+                        message.getContent()
+                ))
+                .toList();
     }
 
     public Integer getChatIdByReceiverId(int receiverId) {

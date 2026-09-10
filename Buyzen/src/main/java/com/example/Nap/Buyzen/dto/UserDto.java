@@ -15,9 +15,15 @@ public class UserDto {
     private String username;
     private String email;
     private String role;
-
-
+    private String authProviderType;
 
     public UserDto(String name, String email) {
+    }
+
+    public UserDto(String name, String email, String role, String authProviderType) {
+        this.username=name;
+        this.email=email;
+        this.role=role;
+        this.authProviderType=authProviderType;
     }
 }

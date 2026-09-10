@@ -91,12 +91,14 @@ public class UserService {
     public UserDto getUserDetails(){
         int id=getCurrentUserId();
         User user=userRepo.findById(id).orElseThrow(()->new RuntimeException("user not found"));
-        return new UserDto(user.getName(),user.getEmail());
+        return new UserDto(user.getName(),user.getEmail(),
+                user.getRole().name(),user.getProviderType().name());
     }
 
     public List<UserDto> getAllUsers(){
        return userRepo.findAll().stream().map(user->(new UserDto(
-                user.getId(),user.getName(), user.getEmail(),user.getRole().name()))).toList();
+                user.getId(),user.getName(), user.getEmail(),
+               user.getRole().name(),user.getProviderType().name()))).toList();
     }
 
 

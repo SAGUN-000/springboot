@@ -41,7 +41,7 @@ public class UserController {
 
     @GetMapping("/user/profile")
     public ResponseEntity<UserDto> getUserDetails(){
-        UserDto userDto=userService.getUserDetails();
+       UserDto userDto=userService.getUserDetails();
         if (userDto==null){
             return ResponseEntity.noContent().build();
         }
