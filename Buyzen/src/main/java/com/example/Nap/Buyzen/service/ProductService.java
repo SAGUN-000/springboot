@@ -25,11 +25,19 @@ public class ProductService {
 
         Page<Product> productPage;
 
+        long start = System.currentTimeMillis();
+
         if (keyword == null || keyword.isBlank()) {
             productPage = productRepo.findFeaturedProducts(pageable);
         } else {
-            productPage = productRepo.findByNameContainingIgnoreCase(keyword,pageable);
+            productPage = productRepo.findByNameContainingIgnoreCase(keyword, pageable);
         }
+
+        System.out.println(
+                "DB query: " +
+                        (System.currentTimeMillis() - start) +
+                        " ms"
+        );
 
         return productPage.map(p ->
                 new ProductDto(
@@ -41,7 +49,6 @@ public class ProductService {
                 )
         );
     }
-
 
     public Page<ProductDto> getProductsByCategory(String slug, int pageNum, int pageSize) {
 
