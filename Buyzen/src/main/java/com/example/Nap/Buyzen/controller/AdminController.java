@@ -1,11 +1,10 @@
 package com.example.Nap.Buyzen.controller;
 
-import com.example.Nap.Buyzen.dto.AdminOrderDto;
-import com.example.Nap.Buyzen.dto.SignupDto;
-import com.example.Nap.Buyzen.dto.UserDto;
-import com.example.Nap.Buyzen.dto.UserPurchaseDto;
+import com.example.Nap.Buyzen.dto.*;
+import com.example.Nap.Buyzen.enums.OrderStatus;
 import com.example.Nap.Buyzen.enums.Role;
 import com.example.Nap.Buyzen.service.AdminAnalyticsService;
+import com.example.Nap.Buyzen.service.OrderService;
 import com.example.Nap.Buyzen.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +23,7 @@ public class AdminController {
 
     private final UserService userService;
     private final AdminAnalyticsService adminAnalyticsService;
+    private final OrderService orderService;
 
     @PostMapping("/create_admin")
     public ResponseEntity<String> CreateAdmin(@RequestBody SignupDto signupDto){
@@ -52,6 +52,17 @@ public class AdminController {
     public ResponseEntity<List<AdminOrderDto>> getAllOrders(){
         return ResponseEntity.ok(adminAnalyticsService.getAllOrdersForAdmin());
      }
+
+    @PatchMapping("/{orderId}/status")
+    public ResponseEntity<OrderDto> updateOrderStatus(
+            @PathVariable int orderId,
+            @RequestBody StatusUpdateRequestDto statusUpdateRequestDto
+    ) {
+
+        return ResponseEntity.ok(
+                orderService.updateOrderStatus(orderId, statusUpdateRequestDto)
+        );
+    }
 
 
 

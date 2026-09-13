@@ -3,6 +3,7 @@ package com.example.Nap.Buyzen.service;
 import com.example.Nap.Buyzen.dto.CheckoutRequestDto;
 import com.example.Nap.Buyzen.dto.OrderDto;
 import com.example.Nap.Buyzen.dto.OrderItemDto;
+import com.example.Nap.Buyzen.dto.StatusUpdateRequestDto;
 import com.example.Nap.Buyzen.entities.Order;
 import com.example.Nap.Buyzen.entities.OrderItem;
 import com.example.Nap.Buyzen.entities.Product;
@@ -16,7 +17,6 @@ import com.example.Nap.Buyzen.repository.UserRepo;
 import com.example.Nap.Buyzen.security.SecurityPrinciple;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.mapping.Collection;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -180,6 +180,17 @@ public class OrderService {
         return orders.stream()
                 .map(this::mapToDto)
                 .toList();
+    }
+
+    public OrderDto updateOrderStatus(int orderId,StatusUpdateRequestDto statusUpdateRequestDto) {
+
+        Order order = orderRepo.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("order not found"));
+
+        order.setStatus(statusUpdateRequestDto.status());
+
+        return mapToDto(orderRepo.save(order));
+
     }
 
 }
