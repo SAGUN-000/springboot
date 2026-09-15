@@ -2,6 +2,7 @@ package com.example.Nap.Buyzen.service;
 
 import com.example.Nap.Buyzen.dto.AdminOrderDto;
 import com.example.Nap.Buyzen.dto.AdminOrderItemDto;
+import com.example.Nap.Buyzen.dto.UserChatsDto;
 import com.example.Nap.Buyzen.dto.UserPurchaseDto;
 import com.example.Nap.Buyzen.entities.Order;
 import com.example.Nap.Buyzen.entities.OrderItem;
@@ -56,6 +57,8 @@ public class AdminAnalyticsService {
                 })
                 .toList();
     }
+
+
 
 
 

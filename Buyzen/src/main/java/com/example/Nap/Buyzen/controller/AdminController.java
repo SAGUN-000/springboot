@@ -4,6 +4,7 @@ import com.example.Nap.Buyzen.dto.*;
 import com.example.Nap.Buyzen.enums.OrderStatus;
 import com.example.Nap.Buyzen.enums.Role;
 import com.example.Nap.Buyzen.service.AdminAnalyticsService;
+import com.example.Nap.Buyzen.service.MessageService;
 import com.example.Nap.Buyzen.service.OrderService;
 import com.example.Nap.Buyzen.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class AdminController {
     private final UserService userService;
     private final AdminAnalyticsService adminAnalyticsService;
     private final OrderService orderService;
+    private final MessageService messageService;
 
     @PostMapping("/create_admin")
     public ResponseEntity<String> CreateAdmin(@RequestBody SignupDto signupDto){
@@ -62,6 +64,12 @@ public class AdminController {
         return ResponseEntity.ok(
                 orderService.updateOrderStatus(orderId, statusUpdateRequestDto)
         );
+    }
+    @GetMapping("/user_chats")
+    public ResponseEntity<List<UserChatsDto>> getAllUserWithChats(){
+
+        return ResponseEntity.ok(messageService.getAllUsersWithChats());
+
     }
 
 

@@ -2,8 +2,11 @@ package com.example.Nap.Buyzen.service;
 
 import com.example.Nap.Buyzen.dto.MessageResponseDto;
 import com.example.Nap.Buyzen.dto.SendmessageDto;
+import com.example.Nap.Buyzen.dto.UserChatsDto;
 import com.example.Nap.Buyzen.entities.Chat;
 import com.example.Nap.Buyzen.entities.Message;
+import com.example.Nap.Buyzen.entities.User;
+import com.example.Nap.Buyzen.enums.Role;
 import com.example.Nap.Buyzen.repository.ChatRepo;
 import com.example.Nap.Buyzen.repository.MessageRepo;
 import com.example.Nap.Buyzen.repository.UserRepo;
@@ -85,6 +88,14 @@ public class MessageService {
                 senderId,
                 messageDto.content()
         );
+    }
+
+    public List<UserChatsDto> getAllUsersWithChats() {
+
+        User admin = userRepo.findByRole(Role.ADMIN)
+                .orElseThrow(() -> new RuntimeException("Admin not found"));
+
+        return chatRepo.findUsersWithRecentMessage(admin.getId());
     }
 }
 

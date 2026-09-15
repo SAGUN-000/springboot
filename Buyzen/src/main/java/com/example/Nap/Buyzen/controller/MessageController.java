@@ -28,8 +28,8 @@ public class MessageController {
       return   ResponseEntity.ok(messageService.getChatIdByReceiverId(receiverId));
     }
 
-    @GetMapping("/{chatId}")
-    public ResponseEntity<List<SendmessageDto>> getMessages(@PathVariable("chatId") int chatId){
+    @GetMapping("/{chatId}/messages")
+    public ResponseEntity<List<MessageResponseDto>> getMessages(@PathVariable("chatId") int chatId){
         return ResponseEntity.ok(messageService.getMessages(chatId));
     }
 
