@@ -72,6 +72,19 @@ public class AdminController {
 
     }
 
+    @GetMapping("/profile")
+    public ResponseEntity<UserDto> getAllUsersWithProfile(){
+        return ResponseEntity.ok(userService.getUserDetails());
+    }
+
+    @PatchMapping("/updatepassword")
+    public ResponseEntity<String> updatePassword(
+            @RequestBody PassUpdateDto dto
+    ){
+        userService.updatePass(dto);
+        return ResponseEntity.ok("new password set successfully");
+    }
+
 
 
 }

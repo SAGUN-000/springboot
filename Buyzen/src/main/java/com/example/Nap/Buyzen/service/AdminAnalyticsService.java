@@ -45,6 +45,7 @@ public class AdminAnalyticsService {
                             order.getUser().getName(),
                             order.getUser().getEmail(),
                             order.getStatus().toString(),
+                            order.getCreatedAt(),
                             itemsForOrder.stream()
                                     .map(item -> new AdminOrderItemDto(
                                             item.getProduct().getId(),

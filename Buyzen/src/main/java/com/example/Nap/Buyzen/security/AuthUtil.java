@@ -32,7 +32,7 @@ public class AuthUtil {
                 .claim("username", user.getName())
                 .issuedAt(new Date())
                 .signWith(getSecretKey())
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 10))
+                .expiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60))
                 .compact();
     }
 

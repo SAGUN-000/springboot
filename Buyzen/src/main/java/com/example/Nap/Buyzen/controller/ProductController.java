@@ -26,14 +26,10 @@ public class ProductController {
             @RequestParam(defaultValue = "1") int pageNum,
             @RequestParam(defaultValue = "20") int pageSize
     ) {
-
         System.out.println("KEYWORD = [" + keyword + "]");
 
-        Page<ProductDto> result = productService.getProducts(keyword, pageNum, pageSize);
-
-        if (result.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
+        Page<ProductDto> result =
+                productService.getProducts(keyword, pageNum, pageSize);
 
         return ResponseEntity.ok(result);
     }
