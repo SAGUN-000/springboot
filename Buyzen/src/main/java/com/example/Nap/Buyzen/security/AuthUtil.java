@@ -51,6 +51,10 @@ public class AuthUtil {
         return extractClaims(token).get("userId", Integer.class);
     }
 
+    public String getRoleFromToken(String token) {
+        return extractClaims(token).get("role", String.class);
+    }
+
     public AuthProviderType getProviderTypeFromRegistrationId(String registrationId) {
         return switch (registrationId.toLowerCase()) {
             case "google" -> AuthProviderType.GOOGLE;

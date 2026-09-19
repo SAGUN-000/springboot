@@ -1,5 +1,6 @@
 package com.example.Nap.Buyzen.service;
 
+import com.example.Nap.Buyzen.dto.ChatHistoryResponseDto;
 import com.example.Nap.Buyzen.dto.MessageResponseDto;
 import com.example.Nap.Buyzen.dto.SendmessageDto;
 import com.example.Nap.Buyzen.dto.UserChatsDto;
@@ -37,18 +38,36 @@ public class MessageService {
     }
 
 
-    public List<MessageResponseDto> getMessages(int chatId) {
+    public ChatHistoryResponseDto getMessages(int chatId) {
 
-        //check whether chat exists or not
+        int currentUserId = getCurrentUserId();
 
-        return messageRepo.findAllByChatId(chatId)
-                .stream()
-                .map(message -> new MessageResponseDto(
-                        message.getChat().getId(),
-                        message.getSenderId(),
-                        message.getContent()
-                ))
-                .toList();
+        Chat chat = chatRepo.findById(chatId)
+                .orElseThrow(() -> new RuntimeException("Chat not found"));
+
+        int receiverId;
+
+        if (chat.getSenderId() == currentUserId) {
+            receiverId = chat.getReceiverId();
+        } else {
+            receiverId = chat.getSenderId();
+        }
+
+        List<MessageResponseDto> messages =
+                messageRepo.findAllByChatId(chatId)
+                        .stream()
+                        .map(message -> new MessageResponseDto(
+                                message.getChat().getId(),
+                                message.getSenderId(),
+                                message.getContent()
+                        ))
+                        .toList();
+
+        return new ChatHistoryResponseDto(
+                chatId,
+                receiverId,
+                messages
+        );
     }
 
     public Integer getChatIdByReceiverId(int receiverId) {
@@ -60,9 +79,9 @@ public class MessageService {
     }
 
 
-    public MessageResponseDto sendMessage(SendmessageDto messageDto) {
+    public MessageResponseDto sendMessage(SendmessageDto messageDto,int senderId) {
 
-        int senderId = getCurrentUserId();
+
 
         userRepo.findById(senderId).orElseThrow(() -> new RuntimeException("sender not found"));
 
